@@ -1,9 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
+import Header from './components/Shared/Header/Header';
+import Footer from './components/Shared/Footer/Footer';
 
 function App() {
   return (
     <div className="App">
+      <Header></Header>
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -11,6 +14,7 @@ function App() {
         </p>
         <p>rayz</p>
       </header>
+      <Footer></Footer>
     </div>
   );
 }
