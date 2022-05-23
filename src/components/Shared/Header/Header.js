@@ -37,27 +37,27 @@ const Header = () => {
               </ul>
               <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
                 <li className="flex items-center ml-4">
-                  <Link className='text-white font-bold text-md  hover:text-gray-300' to={'/'}>Home</Link>
+                  <Link className='text-white font-semibold text-md  hover:text-gray-300' to={'/'}>Home</Link>
                 </li>
                 <li className="flex items-center ml-4">
-                  <Link className='text-white font-bold text-md  hover:text-gray-300' to={'/blog'}>Blog</Link>
+                  <Link className='text-white font-semibold text-md  hover:text-gray-300' to={'/blog'}>Blog</Link>
                 </li>
                 <li className="flex items-center ml-4">
-                  <Link className='text-white font-bold text-md  hover:text-gray-300' to={'/addproduct'}>Add Product</Link>
+                  <Link className='text-white font-semibold text-md  hover:text-gray-300' to={'/addproduct'}>Add Product</Link>
                 </li>
                 <li className="flex items-center ml-4">
-                  <Link className='text-white font-bold text-md  hover:text-gray-300' to={'/manageproduct'}>Manage Product</Link>
+                  <Link className='text-white font-semibold text-md  hover:text-gray-300' to={'/manageproduct'}>Manage Product</Link>
                 </li>
                 <li className="flex items-center ml-4">
-                  <Link className='text-white font-bold text-md  hover:text-gray-300' to={'/productdetails'}>Product Details</Link>
+                  <Link className='text-white font-semibold text-md  hover:text-gray-300' to={'/productdetails'}>Product Details</Link>
                 </li>
                 <li className="flex items-center ml-4">
-                  <Link className='text-white font-bold text-md  hover:text-gray-300' to={'/myproduct'}>My Product</Link>
+                  <Link className='text-white font-semibold text-md  hover:text-gray-300' to={'/myproduct'}>My Product</Link>
                 </li>
                 <li className="flex items-center">
                   <Link to={'/login'}>
                     <button
-                      className="ml-4 mt-2 md:mt-0 bg-[#D15A18] text-white hover:text-gray-300  text-xs font-bold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0  mb-3 ease-linear transition-all duration-150"
+                      className="ml-4 mt-2 md:mt-0 bg-[#D15A18] text-white hover:text-gray-300  text-xs font-semibold uppercase px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none lg:mr-1 lg:mb-0  mb-3 ease-linear transition-all duration-150"
                       type="button"
                     >
                       Log in

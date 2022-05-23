@@ -1,6 +1,5 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faFacebook } from '@fortawesome/free-solid-svg-icons'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
 
 const Footer = () => {
   return (
@@ -15,31 +14,30 @@ const Footer = () => {
                 <h5 className="text-lg mt-0 mb-2 text-white">
                   Find us on any of these platforms, we respond 1-2 business days.
                 </h5>
-                <FontAwesomeIcon icon={['fab', 'facebook']} />
                 <div className="mt-6 lg:mb-0 mb-6">
                   <button
                     className="bg-white text-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    <i className="fab fa-twitter"></i>
+                    f
                   </button>
                   <button
                     className="bg-white  shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    <i className="fab fa-facebook-square"></i>
+                    f
                   </button>
                   <button
                     className="bg-white  shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    <i className="fab fa-dribbble"></i>
+                    f
                   </button>
                   <button
                     className="bg-white  shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    <i className="fab fa-github"></i>
+                    f
                   </button>
                 </div>
               </div>

@@ -1,5 +1,7 @@
 
 import './App.css';
+import { ToastContainer,  } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Header from './components/Shared/Header/Header';
 import Footer from './components/Shared/Footer/Footer';
 import Home from './components/Pages/Home/Home';
@@ -11,6 +13,7 @@ import ManageProduct from './components/Pages/ManageProduct/ManageProduct';
 import Blog from './components/Pages/Blog/Blog';
 import MyProduct from './components/Pages/MyProduct/MyProduct';
 import StockUpdate from './components/Pages/StockUpdate/StockUpdate';
+
 
 function App() {
   return (
@@ -29,6 +32,7 @@ function App() {
 
       </Routes>
       <Footer></Footer>
+      <ToastContainer></ToastContainer>
     </div>
   );
 }

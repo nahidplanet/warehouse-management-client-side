@@ -11,10 +11,10 @@ const Product = ({product}) => {
   return (
     <div className=' border-1 rounded-sm border-[#D15A18]'>
       <div className=" flex flex-col min-w-0 break-words bg-white mb-6 shadow-lg rounded-lg bg-lightBlue-500">
-        <img
+        <img 
           alt={name}
           src={img}
-          className="w-full  rounded-t-lg"
+          className="w-full h-[360px]  rounded-t-lg"
         />
         <div className=" px-8 pb-8 pt-6">
           
@@ -22,7 +22,7 @@ const Product = ({product}) => {
             {name}
           </h4>
           <p className="text-sm font-sm mt-2 text-gray-800">
-            {desc}
+            {desc.slice(0,173)}
           </p>
           <div className='flex justify-between text-md mt-2'>
             <p className='capitalize'><span className='font-semibold'>Supplier:</span> {supplier}</p>
