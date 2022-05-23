@@ -1,25 +1,54 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import useProductdetails from '../../../hooks/useProductdetails';
 import Button from '../../Shared/Button/Button'
 
 const StockUpdate = () => {
   const { productId } = useParams({});
-  console.log(productId);
   const [product, setProduct] = useProductdetails(productId);
   const { _id, name, desc, img, supplier, quantity, price } = product;
 
-  const handleAddQuantity = (e) => {
-    e.preventDefault();
-    const add = e.target.addQuantity.value;
-    console.log(add);
+  const handleValueDecrease = () => {
+    const updateQuantity = parseInt(quantity) -1;
+    const url = `http://localhost:5000/product?updateid=${_id}&value=${updateQuantity}`;
+    const updatQuantity = async () => {
+      await axios.put(url)
+        .then(res => {
+          console.log(res);
+          console.log(res.data);
+        })
+        .then(error => {
+          console.log(error);
+        })
+    }
+    updatQuantity();
   }
 
+  const handleAddQuantity = (e) => {
+    e.preventDefault();
+    const newQuantity = parseInt(e.target.addQuantity.value);
+    const updateQuantity = newQuantity + parseInt(quantity);
+    const url = `http://localhost:5000/product?updateid=${_id}&value=${updateQuantity}`;
+    const updatQuantity = async () => {
+      await axios.put(url)
+        .then(res => {
+          console.log(res);
+          if (res.data.acknowledged == true) {
+            
+          }
+        })
+        .then(error => {
+          console.log(error);
+        })
+    }
+    updatQuantity();
+
+  }
 
   return (
     <div>
       <section className="md:flex items-center mx-auto w-11/12 m-10">
-
         <div className='md:w-6/12 '>
           <div className='w-full border rounded-md'>
             <div className=" h-[350px] md:h-[500px] w-10/12 mx-auto p-10 ">
@@ -84,7 +113,7 @@ const StockUpdate = () => {
                     <td className='pt-3  font-bold text-xl capitalize align-middle px-3 w-[200px] '></td>
                     <td className='pt-3  text-lg font-semibold pl-3 align-top px-3 '>
                       <div>
-                        <button className='border px-4 py-2 w-full hover:bg-[#D15A18] bg-[#b65826] text-white font-bold rounded-md'>Deliverd</button>
+                        <button onClick={handleValueDecrease} className='border px-4 py-2 w-full hover:bg-[#D15A18] bg-[#b65826] text-white font-bold rounded-md'>Deliverd</button>
                       </div>
                     </td>
                   </tr>
