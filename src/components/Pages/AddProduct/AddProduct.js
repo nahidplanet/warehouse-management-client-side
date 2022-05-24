@@ -129,7 +129,7 @@ const AddProduct = () => {
               <span className="text-gray-700 capitalize">Supplier Name</span>
               <input
                 value={user?.displayName}
-                readOnly ref={supplierRef}
+                required ref={supplierRef}
                 type='text' name='supplier'
                 className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
                 placeholder="Supplier Name "
