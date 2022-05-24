@@ -1,9 +1,12 @@
+
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-
+import { signOut } from 'firebase/auth';
+ 
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../../firebase/firebase.init';
 import MyProductRows from '../MyProductRows/MyProductRows';
@@ -12,15 +15,28 @@ const MyProduct = () => {
   const [user] = useAuthState(auth);
   const [myProduct, setMyProduct] = useState([]);
   const [success, setSuccess] = useState(0);
-
+const navigate = useNavigate()
   useEffect(() => {
-    const email = user?.email;
-    const url = `http://localhost:5000/myproduct?email=${email}`
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
+    const getMyProduct = async () => {
+      const email = user?.email;
+      const url = `http://localhost:5000/myproduct?email=${email}`;
+      try {
+        const { data } = await axios.get(url,{
+          headers:{
+            authorization:`Bearer ${localStorage.getItem('localToken')}`
+          }
+        });
         setMyProduct(data);
-      });
+      } catch (error) {
+        console.log(error.message);
+        if (error?.response?.status === 401||error?.response?.status === 403 ) {
+          signOut(auth);
+          navigate('/login')
+        }
+      }
+      
+    }
+    getMyProduct();
 
   }, [user]);
   const handleDeletProduct = (id) => {
@@ -34,7 +50,7 @@ const MyProduct = () => {
             if (result.data.deletedCount === 1) {
               const rest = myProduct.filter(product => product._id !== id);
               setMyProduct(rest);
-  
+
             }
           })
           .then(error => {
@@ -43,7 +59,7 @@ const MyProduct = () => {
       }
       deletItem();
     }
-    }
+  }
   if (success === 1) {
     toast("Product Deleted");
   }
