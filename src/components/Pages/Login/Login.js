@@ -36,14 +36,14 @@ const Login = () => {
   
     localStorage.setItem("localToken", data.accessToken);
     
-    navigate(from, { replace: true });
+    
   }
 
   if (loading) {
     return <Loading></Loading>
   }
   if (user) {
-
+    navigate(from, { replace: true });
   }
 
   if (error) {
