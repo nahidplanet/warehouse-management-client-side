@@ -1,11 +1,15 @@
 import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import auth from '../../../firebase/firebase.init'
 
 const AddProduct = () => {
   const [success, setSuccess] = useState({});
+  const [user, loading, error] = useAuthState(auth);
 
   const nameRef = useRef('');
+  const emailRef = useRef('');
   const descRef = useRef('');
   const imgRef = useRef('');
   const priceRef = useRef('');
@@ -15,19 +19,20 @@ const AddProduct = () => {
   const handleAddProduct = (e) => {
     e.preventDefault();
     const name = nameRef.current.value;
+    const email = emailRef.current.value;
     const desc = descRef.current.value;
     const img = imgRef.current.value;
     const price = priceRef.current.value;
     const quantity = quantityRef.current.value;
     const supplier = supplierRef.current.value;
-    const newProduct = { name: name, desc: desc, img: img, price: price, quantity: quantity, supplier: supplier };
+    const newProduct = { name: name, email:email, desc: desc, img: img, price: price, quantity: quantity, supplier: supplier };
 
     const url = `http://localhost:5000/product`;
-    const addItem =async () =>{
-     await axios.post(url, newProduct)
-      .then(result => {
-        setSuccess(result.data);
-      });
+    const addItem = async () => {
+      await axios.post(url, newProduct)
+        .then(result => {
+          setSuccess(result.data);
+        });
     }
     addItem();
     e.target.reset();
@@ -44,7 +49,21 @@ const AddProduct = () => {
           <div className='mb-3'>
             <label className="block text-md">
               <span className="text-gray-700 capitalize">Product Name</span>
-              <input ref={nameRef} type='text' name='name'
+              <input
+                required
+                ref={nameRef}
+                type='text'
+                name='name'
+                className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
+                placeholder="Product Name "
+              />
+            </label>
+          </div>
+          {/* email  */}
+          <div className='mb-3'>
+            <label className="block text-md">
+              <span className="text-gray-700 capitalize">User Email</span>
+              <input readOnly value={user?.email} ref={emailRef} type='email' name='name'
                 className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
                 placeholder="Product Name "
               />
@@ -54,7 +73,9 @@ const AddProduct = () => {
           <div className='mb-3'>
             <label className="block text-md">
               <span className="text-gray-700 capitalize">Product Details</span>
-              <textarea ref={descRef} cols="30" name='desc'
+              <textarea
+                required
+                ref={descRef} cols="30" name='desc'
                 className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
                 placeholder="Product Details "
               />
@@ -64,7 +85,11 @@ const AddProduct = () => {
           <div className='mb-3'>
             <label className="block text-md">
               <span className="text-gray-700 capitalize">Image Url</span>
-              <input ref={imgRef} type='text' name='img'
+              <input
+                ref={imgRef}
+                type='text'
+                name='img'
+                required
                 className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
                 placeholder="https://your_product_image_url.jpg"
               />
@@ -74,7 +99,11 @@ const AddProduct = () => {
           <div className='mb-3'>
             <label className="block text-md">
               <span className="text-gray-700 capitalize">Product Price</span>
-              <input ref={priceRef} type='number' name='price'
+              <input
+                required
+                ref={priceRef}
+                type='number'
+                name='price'
                 className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
                 placeholder="Product Price "
               />
@@ -84,7 +113,11 @@ const AddProduct = () => {
           <div className='mb-3'>
             <label className="block text-md">
               <span className="text-gray-700 capitalize">Product Quantity</span>
-              <input ref={quantityRef} type='number' name='quantity'
+              <input
+                required
+                ref={quantityRef}
+                type='number'
+                name='quantity'
                 className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
                 placeholder="Product Quantity "
               />
@@ -94,7 +127,10 @@ const AddProduct = () => {
           <div className='mb-3'>
             <label className="block text-md">
               <span className="text-gray-700 capitalize">Supplier Name</span>
-              <input ref={supplierRef} type='text' name='supplier'
+              <input
+                value={user?.displayName}
+                readOnly ref={supplierRef}
+                type='text' name='supplier'
                 className="block w-full mt-1 px-3 py-2 rounded-md text-sm border focus:border-gray-800 focus:outline-none focus:shadow-outline-red form-input"
                 placeholder="Supplier Name "
               />

@@ -1,100 +1,105 @@
-import React from 'react';
+
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
+
+import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { toast } from 'react-toastify';
+import auth from '../../../firebase/firebase.init';
+import MyProductRows from '../MyProductRows/MyProductRows';
 
 const MyProduct = () => {
+  const [user] = useAuthState(auth);
+  const [myProduct, setMyProduct] = useState([]);
+  const [success, setSuccess] = useState(0);
+
+  useEffect(() => {
+    const email = user?.email;
+    const url = `http://localhost:5000/myproduct?email=${email}`
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        setMyProduct(data);
+      });
+
+  }, [user]);
+  const handleDeletProduct = (id) => {
+    const agree = window.confirm("Are you sure to delete?");
+    if (agree) {
+      const deletItem = async () => {
+        const url = `http://localhost:5000/product/${id}`;
+        await axios.delete(url)
+          .then(result => {
+            setSuccess(result.data.deletedCount);
+            if (result.data.deletedCount === 1) {
+              const rest = myProduct.filter(product => product._id !== id);
+              setMyProduct(rest);
+  
+            }
+          })
+          .then(error => {
+            console.log(error);
+          })
+      }
+      deletItem();
+    }
+    }
+  if (success === 1) {
+    toast("Product Deleted");
+  }
   return (
     <div>
-      <div>
-      <div class="w-full mb-8 overflow-hidden my-10 p-10 shadow-xs">
-        <div class="w-full overflow-x-auto">
-          <table class="w-full whitespace-no-wrap">
+
+      <h1 className='text-center text-gray-900 text-3xl font-bold capitalize mt-10'>all product list</h1>
+      <div className="w-full mb-8 overflow-hidden  my-10 p-10 shadow-xs">
+        <div className="w-full overflow-x-auto">
+          <table className="w-full whitespace-no-wrap">
             <thead>
               <tr
-                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800"
+                className="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b  bg-gray-50  "
               >
-                <th class="px-4 py-3">Client</th>
-                <th class="px-4 py-3">Amount</th>
-                <th class="px-4 py-3">Status</th>
-                <th class="px-4 py-3">Date</th>
+                <th className="px-4 py-3">Product Name</th>
+                <th className="px-4 py-3">Product Id</th>
+                <th className="px-4 py-3">Quantity</th>
+                <th className="px-4 py-3">Manage</th>
               </tr>
             </thead>
-            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-
-
-              <tr class="text-gray-700 dark:text-gray-400">
-                <td class="px-4 py-3">
-                  <div class="flex items-center text-sm">
-                    {/* <!-- Avatar with inset shadow --> */}
-                    <div
-                      class="relative hidden w-8 h-8 mr-3 rounded-full md:block"
-                    >
-                      <img
-                        class="object-cover w-full h-full rounded-full"
-                        src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&ixid=eyJhcHBfaWQiOjE3Nzg0fQ"
-                        alt=""
-                        loading="lazy"
-                      />
-                      <div
-                        class="absolute inset-0 rounded-full shadow-inner"
-                        aria-hidden="true"
-                      ></div>
-                    </div>
-                    <div>
-                      <p class="font-semibold">Hans Burger</p>
-                      <p class="text-xs text-gray-600 dark:text-gray-400">
-                        10x Developer
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td class="px-4 py-3 text-sm">
-                  $ 863.45
-                </td>
-                <td class="px-4 py-3 text-xs">
-                  <span
-                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100"
-                  >
-                    Approved
-                  </span>
-                </td>
-                <td class="px-4 py-3 text-sm">
-                  6/10/2020
-                </td>
-              </tr>
+            <tbody className="bg-white divide-y ">
+              {
+                myProduct.length < 1 ?
+                  <tr className=''>
+                    <td className='align-center py-20 text-center text-red-700 font-bold text-2xl md:text-6xl'>No data found</td>
+                  </tr>
+                  :
+                  myProduct.map(product => <MyProductRows key={product._id} product={product} deleteMyProduct={handleDeletProduct}></MyProductRows>)
+              }
             </tbody>
           </table>
         </div>
         <div
-          class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800"
+          className="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t "
         >
-          <span class="flex items-center col-span-3">
+          <span className="flex items-center col-span-3">
             Showing 21-30 of 100
           </span>
-          <span class="col-span-2"></span>
+          <span className="col-span-2"></span>
           {/* <!-- Pagination --> */}
-          <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+          <span className="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
             <nav aria-label="Table navigation">
-              <ul class="inline-flex items-center">
+              <ul className="inline-flex items-center">
                 <li>
                   <button
-                    class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
-                    aria-label="Previous"
+                    className="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="w-4 h-4 fill-current"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                      ></path>
-                    </svg>
+                    <FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
+
                   </button>
                 </li>
                 <li>
                   <button
-                    class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
+                    className="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple"
                   >
                     1
                   </button>
@@ -102,20 +107,11 @@ const MyProduct = () => {
 
                 <li>
                   <button
-                    class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
-                    aria-label="Next"
+                    className="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+
                   >
-                    <svg
-                      class="w-4 h-4 fill-current"
-                      aria-hidden="true"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
-                      ></path>
-                    </svg>
+                    <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
+
                   </button>
                 </li>
               </ul>
@@ -123,7 +119,6 @@ const MyProduct = () => {
           </span>
         </div>
       </div>
-    </div>
     </div>
   );
 };

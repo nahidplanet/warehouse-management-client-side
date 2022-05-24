@@ -10,25 +10,26 @@ import { toast } from 'react-toastify';
 const ManageProduct = () => {
   const [success,setSuccess] = useState(0);
   const [products, setProducts] = useProducts();
-
   const handleDeletProduct = (id) =>{
-    
-    const deletItem = async () => {
-      const url = `http://localhost:5000/product/${id}`;
-      await axios.delete(url)
-      .then(result => {
-        setSuccess(result.data.deletedCount);
-        if (result.data.deletedCount === 1) {
-          const rest =  products.filter(product=> product._id !== id);
-          setProducts(rest);
-        }
-      })
-      .then(error=>{
-        console.log(error);
-      })
+    const agree = window.confirm("Are you sure to delete?");
+    if (agree) {
+      const deletItem = async () => {
+        const url = `http://localhost:5000/product/${id}`;
+        await axios.delete(url)
+        .then(result => {
+          setSuccess(result.data.deletedCount);
+          if (result.data.deletedCount === 1) {
+            const rest =  products.filter(product=> product._id !== id);
+            setProducts(rest);
+          }
+        })
+        .then(error=>{
+          console.log(error);
+        })
+      }
+      deletItem();
     }
-    deletItem();
-  }
+    }
  if (success === 1) {
     toast("Product Deleted");
  }

@@ -1,4 +1,5 @@
 
+import AOS from 'aos';
 import './App.css';
 import { ToastContainer,  } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,9 +14,18 @@ import ManageProduct from './components/Pages/ManageProduct/ManageProduct';
 import Blog from './components/Pages/Blog/Blog';
 import MyProduct from './components/Pages/MyProduct/MyProduct';
 import StockUpdate from './components/Pages/StockUpdate/StockUpdate';
+import ForgetPassword from './components//Pages/ForgetPassword/ForgetPassword';
+import RequireAuth from './components/Shared/RequireAuth/RequireAuth';
+import NotFound from './components/Pages/NotFound/NotFound';
+import { useEffect } from 'react';
 
 
 function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: "1000"
+    });
+  }, [])
   return (
     <div className="App">
       <Header></Header>
@@ -23,12 +33,30 @@ function App() {
         <Route path='/' element={<Home></Home>}></Route>
         <Route path='/home' element={<Home></Home>}></Route>
         <Route path='/blog' element={<Blog></Blog>}></Route>
-        <Route path='/addproduct' element={<AddProduct></AddProduct>}></Route>
-        <Route path='/manageproduct' element={<ManageProduct></ManageProduct>}></Route>
-        <Route path='/myproduct' element={<MyProduct></MyProduct>}></Route>
-        <Route path='/stockupdate/:productId' element={<StockUpdate></StockUpdate>}></Route>
+        <Route path='/addproduct' element={
+          <RequireAuth>
+            <AddProduct></AddProduct>
+          </RequireAuth>
+        }></Route>
+        <Route path='/manageproduct' element={
+          <RequireAuth>
+            <ManageProduct></ManageProduct>
+          </RequireAuth>
+        }></Route>
+        <Route path='/myproduct' element={
+          <RequireAuth>
+            <MyProduct></MyProduct>
+          </RequireAuth>
+        }></Route>
+        <Route path='/stockupdate/:productId' element={
+          <RequireAuth>
+            <StockUpdate></StockUpdate>
+          </RequireAuth>
+        }></Route>
         <Route path='/login' element={<Login></Login>}></Route>
-        {/* <Route path='/registration' element={<Registration></Registration>}></Route> */}
+        <Route path='/forgetpassword' element={<ForgetPassword></ForgetPassword>}></Route>
+        <Route path='/registration' element={<Registration></Registration>}></Route>
+        <Route path='*' element={<NotFound></NotFound>}></Route>
 
       </Routes>
       <Footer></Footer>

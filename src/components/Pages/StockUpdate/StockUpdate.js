@@ -1,25 +1,32 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import useProductdetails from '../../../hooks/useProductdetails';
 import Button from '../../Shared/Button/Button'
 
 const StockUpdate = () => {
   const { productId } = useParams({});
-  const [product, setProduct] = useProductdetails(productId);
+  const [product, setProduct] = useState({});
   const { _id, name, desc, img, supplier, quantity, price } = product;
+  const [ab, setAb] = useState(true);
+
+
+  useEffect(() => {
+    const url = `http://localhost:5000/product/${productId}`;
+    axios.get(url)
+      .then(res => {
+        setProduct(res.data);
+      });
+  }, [ab]);
 
   const handleValueDecrease = () => {
-    const updateQuantity = parseInt(quantity) -1;
+    const updateQuantity = parseInt(quantity) - 1;
     const url = `http://localhost:5000/product?updateid=${_id}&value=${updateQuantity}`;
     const updatQuantity = async () => {
       await axios.put(url)
         .then(res => {
-          console.log(res);
-          console.log(res.data);
-        })
-        .then(error => {
-          console.log(error);
+          if (res.data.acknowledged == true) {
+            setAb(!ab)
+          }
         })
     }
     updatQuantity();
@@ -35,15 +42,12 @@ const StockUpdate = () => {
         .then(res => {
           console.log(res);
           if (res.data.acknowledged == true) {
-            
+            setAb(!ab)
           }
-        })
-        .then(error => {
-          console.log(error);
         })
     }
     updatQuantity();
-
+    e.target.reset()
   }
 
   return (
@@ -105,7 +109,7 @@ const StockUpdate = () => {
                       <form onSubmit={handleAddQuantity}>
                         <input className='text-md font-semibold px-3 py-2 w-full border' type="number" name="addQuantity" placeholder='Add Quantity' />
                         <br />
-                        <input type="submit" className='border mt-2 px-6 py-2 hover:bg-[#130F40] bg-[#211c5a] text-white font-bold rounded-md' value="Add" />
+                        <input type="submit" className='border mt-2 px-6 py-2 hover:bg-[#130F40] bg-[#211c5a] text-white font-bold rounded-md cursor-pointer' value="Add" />
                       </form>
                     </td>
                   </tr>
