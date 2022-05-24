@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import SocialLogin from '../../Shared/SocialLogin/SocialLogin';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import auth from '../../../firebase/firebase.init';
+import { sendEmailVerification } from 'firebase/auth';
 
 const Registration = () => {
   const [check, setCheck] = useState(false);
@@ -13,7 +14,7 @@ const Registration = () => {
     user,
     loading,
     error,
-  ] = useCreateUserWithEmailAndPassword(auth,{ sendEmailVerification: true });
+  ] = useCreateUserWithEmailAndPassword(auth, {sendEmailVerification: true});
   
   const emailRef = useRef('');
   const passwordRef = useRef('');

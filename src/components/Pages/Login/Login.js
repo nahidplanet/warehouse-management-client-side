@@ -5,13 +5,14 @@ import auth from '../../../firebase/firebase.init';
 import SocialLogin from '../../Shared/SocialLogin/SocialLogin';
 import { css } from "@emotion/react";
 import Loading from '../../Shared/Loading/Loading';
+import axios from 'axios';
 
 const Login = () => {
   const [check, setCheck] = useState(false);
   const [showError, setShowError] = useState('');
   const navigate = useNavigate();
   let location = useLocation();
-  
+
 
   let from = location.state?.from?.pathname || "/";
   const [
@@ -29,14 +30,20 @@ const Login = () => {
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+
     await signInWithEmailAndPassword(email, password);
+    const { data } = await axios.post(`http://localhost:5000/access`, { email });
+    console.log(data);
+    localStorage.setItem("localToken", data.accessToken);
+    
+    navigate(from, { replace: true });
   }
- 
+
   if (loading) {
     return <Loading></Loading>
   }
   if (user) {
-    navigate(from, { replace: true });
+
   }
 
   if (error) {

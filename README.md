@@ -3,7 +3,7 @@
 
 These amazing bike paths in the U.S. bring riders to beautiful parks, historic landmarks, ice cream shops, bars, and more along the way.
 
-## `uses`
+## `using library`
 * node js
 * express
 * cors
