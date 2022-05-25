@@ -11,7 +11,7 @@ const StockUpdate = () => {
 
 
   useEffect(() => {
-    const url = `http://localhost:5000/product/${productId}`;
+    const url = `https://lit-temple-80083.herokuapp.com/product/${productId}`;
     axios.get(url)
       .then(res => {
         setProduct(res.data);
@@ -20,7 +20,7 @@ const StockUpdate = () => {
 
   const handleValueDecrease = () => {
     const updateQuantity = parseInt(quantity) - 1;
-    const url = `http://localhost:5000/product?updateid=${_id}&value=${updateQuantity}`;
+    const url = `https://lit-temple-80083.herokuapp.com/product?updateid=${_id}&value=${updateQuantity}`;
     const updatQuantity = async () => {
       await axios.put(url)
         .then(res => {
@@ -36,7 +36,7 @@ const StockUpdate = () => {
     e.preventDefault();
     const newQuantity = parseInt(e.target.addQuantity.value);
     const updateQuantity = newQuantity + parseInt(quantity);
-    const url = `http://localhost:5000/product?updateid=${_id}&value=${updateQuantity}`;
+    const url = `https://lit-temple-80083.herokuapp.com/product?updateid=${_id}&value=${updateQuantity}`;
     const updatQuantity = async () => {
       await axios.put(url)
         .then(res => {

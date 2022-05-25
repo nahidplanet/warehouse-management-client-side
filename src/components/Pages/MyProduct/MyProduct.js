@@ -2,11 +2,8 @@
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import { signOut } from 'firebase/auth';
- 
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import auth from '../../../firebase/firebase.init';
 import MyProductRows from '../MyProductRows/MyProductRows';
@@ -15,11 +12,11 @@ const MyProduct = () => {
   const [user] = useAuthState(auth);
   const [myProduct, setMyProduct] = useState([]);
   const [success, setSuccess] = useState(0);
-const navigate = useNavigate()
+  
   useEffect(() => {
     const getMyProduct = async () => {
       const email = user?.email;
-      const url = `http://localhost:5000/myproduct?email=${email}`;
+      const url = `https://lit-temple-80083.herokuapp.com/myproduct?email=${email}`;
       try {
         const { data } = await axios.get(url,{
           headers:{
@@ -28,11 +25,7 @@ const navigate = useNavigate()
         });
         setMyProduct(data);
       } catch (error) {
-        console.log(error.message);
-        if (error?.response?.status === 401||error?.response?.status === 403 ) {
-          signOut(auth);
-          navigate('/login')
-        }
+        
       }
       
     }
@@ -43,7 +36,7 @@ const navigate = useNavigate()
     const agree = window.confirm("Are you sure to delete?");
     if (agree) {
       const deletItem = async () => {
-        const url = `http://localhost:5000/product/${id}`;
+        const url = `https://lit-temple-80083.herokuapp.com/product/${id}`;
         await axios.delete(url)
           .then(result => {
             setSuccess(result.data.deletedCount);
@@ -63,9 +56,9 @@ const navigate = useNavigate()
   if (success === 1) {
     toast("Product Deleted");
   }
+  console.log(myProduct);
   return (
     <div>
-
       <h1 className='text-center text-gray-900 text-3xl font-bold capitalize mt-10'>all product list</h1>
       <div className="w-full mb-8 overflow-hidden  my-10 p-10 shadow-xs">
         <div className="w-full overflow-x-auto">
@@ -83,8 +76,12 @@ const navigate = useNavigate()
             <tbody className="bg-white divide-y ">
               {
                 myProduct.length < 1 ?
-                  <tr className=''>
-                    <td className='align-center py-20 text-center text-red-700 font-bold text-2xl md:text-6xl'>No data found</td>
+                  <tr >
+                    <td className='py-10'>
+                    <h1 className='align-center  text-center text-red-700 font-bold text-2xl md:text-6xl'>No data found</h1>
+                      <p className='align-center mt-3 font-bold text-md  text-center text-green-700'>if you get your own product, please login with email and password</p>
+                    </td>
+                    
                   </tr>
                   :
                   myProduct.map(product => <MyProductRows key={product._id} product={product} deleteMyProduct={handleDeletProduct}></MyProductRows>)

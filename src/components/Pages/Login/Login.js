@@ -32,7 +32,7 @@ const Login = () => {
     const password = passwordRef.current.value;
 
     await signInWithEmailAndPassword(email, password);
-    const { data } = await axios.post(`http://localhost:5000/login`, { email });
+    const { data } = await axios.post(`https://lit-temple-80083.herokuapp.com/login`, { email });
   
     localStorage.setItem("localToken", data.accessToken);
     
@@ -151,3 +151,4 @@ const Login = () => {
 };
 
 export default Login;
+

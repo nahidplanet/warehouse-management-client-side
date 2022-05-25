@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 const useProducts = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    const url = `http://localhost:5000/product`;
+    const url = `https://lit-temple-80083.herokuapp.com/product`;
     axios.get(url)
       .then(response => {
         setProducts(response.data);

@@ -27,7 +27,7 @@ const AddProduct = () => {
     const supplier = supplierRef.current.value;
     const newProduct = { name: name, email:email, desc: desc, img: img, price: price, quantity: quantity, supplier: supplier };
 
-    const url = `http://localhost:5000/product`;
+    const url = `https://lit-temple-80083.herokuapp.com/product`;
     const addItem = async () => {
       await axios.post(url, newProduct)
         .then(result => {

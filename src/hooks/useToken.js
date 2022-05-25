@@ -8,7 +8,7 @@ const useToken = (user) => {
 
       const email = user?.user?.email;
       if (email) {
-        const { data } = await axios.post(`http://localhost:5000/access`, { email });
+        const { data } = await axios.post(`https://lit-temple-80083.herokuapp.com/access`, { email });
         localStorage.setItem("assessToken", data.accessToken);
 
         setToken(data.accessToken);

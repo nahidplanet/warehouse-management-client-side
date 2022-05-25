@@ -14,7 +14,7 @@ const ManageProduct = () => {
     const agree = window.confirm("Are you sure to delete?");
     if (agree) {
       const deletItem = async () => {
-        const url = `http://localhost:5000/product/${id}`;
+        const url = `https://lit-temple-80083.herokuapp.com/product/${id}`;
         await axios.delete(url)
         .then(result => {
           setSuccess(result.data.deletedCount);
