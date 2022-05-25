@@ -11,11 +11,13 @@ const Product = ({product}) => {
   return (
     <div className=' border-1 rounded-sm border-[#D15A18]'>
       <div className=" flex flex-col min-w-0 break-words bg-white mb-6 shadow-lg rounded-lg bg-lightBlue-500">
+        <div className='h-[300px] w-full'>
         <img 
           alt={name}
           src={img}
-          className="w-full h-[360px]  rounded-t-lg"
+          className="w-full h-full  rounded-t-lg"
         />
+        </div>
         <div className=" px-8 pb-8 pt-6">
           
           <h4 className="text-xl font-bold text-gray-800">

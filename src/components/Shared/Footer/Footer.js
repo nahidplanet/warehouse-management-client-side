@@ -1,7 +1,14 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; 
+import { f} from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
+  const gitlink  = () =>{
+return window.location.assign('https://github.com/nahidplanet');
+  }
+  const fblink  = () =>{
+return window.location.assign('https://web.facebook.com/bu.nahid2021');
+  }
   return (
     <div>
       <>
@@ -14,31 +21,36 @@ const Footer = () => {
                 <h5 className="text-lg mt-0 mb-2 text-white">
                   Find us on any of these platforms, we respond 1-2 business days.
                 </h5>
-                <div className="mt-6 lg:mb-0 mb-6">
+                <div className="mt-6 lg:mb-0 mb-6 flex">
                   <button
-                    className="bg-white text-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  onClick={gitlink}
+                    className="bg-white flex justify-center items-center text-white shadow-lg font-normal h-10 w-10  align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    f
+                   <img className='w-8 h-8' src="https://i.ibb.co/Sx6Zxfx/icons8-github-48.png" alt="git" />
                   </button>
                   <button
-                    className="bg-white  shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  onClick={fblink}
+                    className="bg-white flex justify-center items-center text-white shadow-lg font-normal h-10 w-10  align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    f
+                    <img className='w-8 h-8' src="https://i.ibb.co/hDZtYW9/icons8-facebook-48.png" alt="fb" />
                   </button>
                   <button
-                    className="bg-white  shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  onClick={gitlink}
+                    className="bg-white flex justify-center items-center text-white shadow-lg font-normal h-10 w-10  align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    f
+                   <img className='w-8 h-8' src="https://i.ibb.co/Sx6Zxfx/icons8-github-48.png" alt="git" />
                   </button>
                   <button
-                    className="bg-white  shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                  onClick={fblink}
+                    className="bg-white flex justify-center items-center text-white shadow-lg font-normal h-10 w-10  align-center rounded-full outline-none focus:outline-none mr-2"
                     type="button"
                   >
-                    f
+                    <img className='w-8 h-8' src="https://i.ibb.co/hDZtYW9/icons8-facebook-48.png" alt="fb" />
                   </button>
+                  
                 </div>
               </div>
               <div className="w-full lg:w-6/12 px-4">
